@@ -1,0 +1,712 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <title>BookStore</title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="BookStore_User/assets/img/favicon.png"/>
+
+        <!-- all css here -->
+        <link rel="stylesheet" href="BookStore_User/assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="BookStore_User/assets/css/plugin.css"/>
+        <link rel="stylesheet" href="BookStore_User/assets/css/bundle.css"/>
+        <link rel="stylesheet" href="BookStore_User/assets/css/style.css"/>
+        <link rel="stylesheet" href="BookStore_User/assets/css/responsive.css"/>
+
+        <script type="text/javascript" src="BookStore_User/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    </h:head>
+    <h:body>
+        <!-- Add your site or application content here -->
+
+        <!--pos page start-->
+        <div class="pos_page">
+            <div class="container">
+                <!--pos page inner-->
+                <div class="pos_page_inner">  
+                    <!--header area -->
+                    <div class="header_area">
+                        <!--header top--> 
+                        <div class="header_top">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 col-md-6"></div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="header_links">
+                                        <ul>
+                                            <li><a href="faces/BookStore_User/wishlist.xhtml" title="My Wishlist">My Wishlist</a></li>
+                                            <li><a href="faces/BookStore_User/cart.xhtml" title="My Cart">My Cart</a></li>
+                                            <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                                <li>
+                                                    <h:form>
+                                                        <h:commandLink action="account" title="#{loginMB.userAccounts.userAccountUsername}" value="#{loginMB.userAccounts.userAccountUsername}"/>
+                                                    </h:form>
+                                                </li>
+                                                <li>
+                                                    <h:form>
+                                                        <h:commandLink action="#{loginMB.logout()}" title="logout" value="Logout"/>
+                                                    </h:form>
+                                                </li>
+                                            </c:if>
+                                            <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                                <li><a href="faces/BookStore_User/login.xhtml" title="Login">Login</a></li>
+                                                <li><a href="faces/BookStore_User/register.xhtml" title="Register">Register</a></li>
+                                            </c:if>
+                                        </ul>
+                                    </div>   
+                                </div>
+                            </div> 
+                        </div> 
+                        <!--header top end-->
+
+                        <!--header middel--> 
+                        <div class="header_middel">
+                            <div class="row align-items-center">
+                                <!--logo start-->
+                                <div class="col-lg-3 col-md-3">
+                                    <div class="logo">
+                                        <a href="/AssignmentEJB-war/"><img src="BookStore_User/assets/img/logo/logo.png" alt=""/></a>
+                                    </div>
+                                </div>
+                                <!--logo end-->
+                                <div class="col-lg-9 col-md-9">
+                                    <div class="header_right_info">
+                                        <div class="search_bar"></div>
+                                        <div class="shopping_cart">
+                                            <c:if test="#{cartMB.countCart() > 0}">
+                                                <a href="#">
+                                                    <i class="fa fa-shopping-cart"></i> 
+                                                    <h:outputText value=" #{cartMB.totalProductCart} Items - "/>
+                                                    <h:outputText value="#{cartMB.totalMoneyCart}">
+                                                        <f:convertNumber type="currency"/>
+                                                    </h:outputText>
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
+
+                                                <!--mini cart-->
+                                                <div class="mini_cart">
+                                                    <c:forEach items="#{cartMB.showAllCarts()}" var="itemCarts">
+                                                        <div class="cart_item">
+                                                            <div class="cart_img">
+                                                                <h:graphicImage url="#{itemCarts.image}"/>
+                                                            </div>
+                                                            <div class="cart_info">
+                                                                <a href="#"><h:outputText value="#{itemCarts.proName}"/></a>
+                                                                <span class="cart_price">
+                                                                    <h:outputText value="#{itemCarts.unitPrice}">
+                                                                        <f:convertNumber type="currency"/>
+                                                                    </h:outputText>
+                                                                </span>
+                                                                <span class="quantity">
+                                                                    <h:outputText value="Quantity: #{itemCarts.quantity}"/>
+                                                                </span>
+                                                            </div>
+                                                            <div class="cart_remove">
+                                                                <h:form>
+                                                                    <h:commandLink title="Delete" class="fa fa-times-circle" action="#{cartMB.removeCart(itemCarts.proID)}"/>
+                                                                </h:form>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
+                                                    <div class="total_price">
+                                                        <span> Total </span>
+                                                        <span class="prices">
+                                                            <h:outputText value="#{cartMB.totalMoneyCart}">
+                                                                <f:convertNumber type="currency"/>
+                                                            </h:outputText>
+                                                        </span>
+                                                    </div>
+                                                    <div class="cart_button">
+                                                        <a href="checkout.xhtml"> Check out</a>
+                                                    </div>
+                                                </div>
+                                                <!--mini cart end-->
+                                            </c:if>
+                                            <c:if test="#{cartMB.countCart() == 0}">
+                                                <a href="#"><i class="fa fa-shopping-cart"></i> 0 Items - $0 </a>
+                                            </c:if>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>     
+                        <!--header middel end-->      
+
+                        <div class="header_bottom">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="main_menu_inner">
+                                        <div class="main_menu d-none d-lg-block">
+                                            <nav>
+                                                <ul>
+                                                    <li><a href="/AssignmentEJB-war/">Home</a></li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Authors</a>
+                                                        <div class="mega_menu jewelry">
+                                                            <div class="mega_items jewelry">
+                                                                <ul>
+                                                                    <c:forEach items="#{authorsMB.showAllAuthors()}" var="itemAuthors">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.chooseAuthor(itemAuthors.authorID)}" value="#{itemAuthors.authorName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Categories</a>
+                                                        <div class="mega_menu jewelry">
+                                                            <div class="mega_items jewelry">
+                                                                <ul>
+                                                                    <c:forEach items="#{categoriesMB.showAllCategories()}" var="itemCategories">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.chooseCategory(itemCategories.categoryID)}" value="#{itemCategories.categoryName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Languages</a>
+                                                        <div class="mega_menu jewelry">
+                                                            <div class="mega_items jewelry">
+                                                                <ul>
+                                                                    <c:forEach items="#{languagesMB.showAllLanguages()}" var="itemLanguages">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.chooseLanguage(itemLanguages.languageID)}" value="#{itemLanguages.languageName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Publishers</a>
+                                                        <div class="mega_menu jewelry">
+                                                            <div class="mega_items jewelry">
+                                                                <ul>
+                                                                    <c:forEach items="#{publishersMB.showAllPublishers()}" var="itemPublishers">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.choosePublisher(itemPublishers.publisherID)}" value="#{itemPublishers.publisherName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/about_us.xhtml">About Us</a></li>
+
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <div class="mobile-menu d-lg-none">
+                                            <nav>
+                                                <ul>
+                                                    <li><a href="/AssignmentEJB-war/">Home</a></li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Authors</a>
+                                                        <div>
+                                                            <div>
+                                                                <ul>
+                                                                    <c:forEach items="#{authorsMB.showAllAuthors()}" var="itemAuthors">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.chooseAuthor(itemAuthors.authorID)}" value="#{itemAuthors.authorName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Categories</a>
+                                                        <div>
+                                                            <div>
+                                                                <ul>
+                                                                    <c:forEach items="#{categoriesMB.showAllCategories()}" var="itemCategories">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.chooseCategory(itemCategories.categoryID)}" value="#{itemCategories.categoryName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Languages</a>
+                                                        <div>
+                                                            <div>
+                                                                <ul>
+                                                                    <c:forEach items="#{languagesMB.showAllLanguages()}" var="itemLanguages">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.chooseLanguage(itemLanguages.languageID)}" value="#{itemLanguages.languageName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/products_all.xhtml">Publishers</a>
+                                                        <div>
+                                                            <div>
+                                                                <ul>
+                                                                    <c:forEach items="#{publishersMB.showAllPublishers()}" var="itemPublishers">
+                                                                        <li>
+                                                                            <h:form>
+                                                                                <h:commandLink action="#{productsMB.choosePublisher(itemPublishers.publisherID)}" value="#{itemPublishers.publisherName}"/>
+                                                                            </h:form>
+                                                                        </li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </div>
+                                                        </div>  
+                                                    </li>
+                                                    <li><a href="faces/BookStore_User/about_us.xhtml">About Us</a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--header end -->
+
+                    <!--pos home section-->
+                    <div class="pos_home_section">
+                        <div class="row">
+                            <!--banner slider start-->
+                            <div class="col-12">
+                                <div class="banner_slider slider_two">
+                                    <div class="slider_active owl-carousel">
+                                        <div class="single_slider" style="background-image: url(BookStore_User/assets/img/slider/slider_1.png)">
+                                            <div class="slider_content">
+                                                <div class="slider_content_inner">  
+                                                    <h1>Book</h1>
+                                                    <p>Endless treasure of knowledge</p>
+                                                </div>     
+                                            </div>
+                                        </div>
+                                        <div class="single_slider" style="background-image: url(BookStore_User/assets/img/slider/slider_2.png)">
+                                            <div class="slider_content">
+                                                <div class="slider_content_inner">  
+                                                    <h1>Book</h1>
+                                                    <p>Endless treasure of knowledge</p>
+                                                </div>     
+                                            </div> 
+                                        </div>
+                                        <div class="single_slider" style="background-image: url(BookStore_User/assets/img/slider/slider_3.png)">
+                                            <div class="slider_content">
+                                                <div class="slider_content_inner">  
+                                                    <h1>Book</h1>
+                                                    <p>Endless treasure of knowledge</p>
+                                                </div>     
+                                            </div>
+                                        </div>
+                                        <div class="single_slider" style="background-image: url(BookStore_User/assets/img/slider/slider_4.png)">
+                                            <div class="slider_content">
+                                                <div class="slider_content_inner">  
+                                                    <h1>Book</h1>
+                                                    <p>Endless treasure of knowledge</p>
+                                                </div>     
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <!--banner slider start-->
+                            </div>    
+                        </div>  
+                        <!--new product area start-->
+                        <div class="new_product_area product_two">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="block_title">
+                                        <h3>New Books</h3>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="single_p_active owl-carousel">
+                                    <c:forEach begin="0" end="4" step="1" items="#{productsMB.showNewProducts()}" var="itemNewProducts">
+                                        <div class="col-lg-3">
+                                            <div class="single_product">
+                                                <div class="product_thumb">
+                                                    <h:form>
+                                                        <h:commandLink action="#{productsMB.showProductDetails(itemNewProducts.productID)}">
+                                                            <h:graphicImage url="#{itemNewProducts.productImage.substring(3)}"/>
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                    <div class="img_icone">
+                                                        <img src="BookStore_User/assets/img/cart/span-new.png" alt=""/>
+                                                    </div>
+                                                    <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                                        <div class="product_action">
+                                                            <h:form>
+                                                                <h:commandLink class="fa fa-shopping-cart" value="Add to Cart" action="#{cartMB.addCartProduct(itemNewProducts.productID)}"/>
+                                                            </h:form>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                                        <div class="product_action">
+                                                            <h:form>
+                                                                <h:commandLink disabled="true" title="Please login to Add to Cart" class="fa fa-shopping-cart" value="Add to Cart" action="#{cartMB.addCartProduct(itemNewProducts.productID)}"/>
+                                                            </h:form>
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+                                                <div class="product_content">
+                                                    <div class="content_price">
+                                                        <c:if test="#{itemNewProducts.productDiscount > 0}">
+                                                            <span>
+                                                                <h:outputText value="#{itemNewProducts.productPrice - (itemNewProducts.productPrice * (itemNewProducts.productDiscount / 100))}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                            <span class="old-price">
+                                                                <h:outputText value="#{itemNewProducts.productPrice}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                        </c:if>
+
+                                                        <c:if test="#{itemNewProducts.productDiscount == 0}">
+                                                            <span>
+                                                                <h:outputText value="#{itemNewProducts.productPrice}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                        </c:if>
+                                                    </div>
+                                                    <h3 class="product_title">
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.showProductDetails(itemNewProducts.productID)}" value="#{itemNewProducts.productName}"/>
+                                                        </h:form>
+                                                    </h3>
+                                                </div>
+                                                <div class="product_info">
+                                                    <ul>
+                                                        <h:form>
+                                                            <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                                                <li>
+                                                                    <h:commandLink action="#{wishlistMB.addWishlistProduct(itemNewProducts.productID)}" title="Add to Wishlist" value="Add to Wishlist"/>
+                                                                </li>
+                                                            </c:if>
+                                                            <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                                                <li>
+                                                                    <h:commandLink disabled="true" action="#{wishlistMB.addWishlistProduct(itemNewProducts.productID)}" title="Please login to Add to Wishlist" value="Add to Wishlist"/>
+                                                                </li>
+                                                            </c:if>
+                                                            <li>
+                                                                <h:commandLink action="#{productsMB.showProductDetails(itemNewProducts.productID)}" title="Quick view" value="View Detail"/>
+                                                            </li>
+                                                        </h:form>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div> 
+                            </div>    
+                        </div> 
+                        <!--new product area start--> 
+
+                        <!--sale product area start-->
+                        <div class="new_product_area product_two">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="block_title">
+                                        <h3>Sale Books</h3>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="single_p_active owl-carousel">
+                                    <c:forEach items="#{productsMB.showSaleProducts()}" var="itemSaleProducts">
+                                        <div class="col-lg-3">
+                                            <div class="single_product">
+                                                <div class="product_thumb single_banner">
+                                                    <h:form>
+                                                        <h:commandLink action="#{productsMB.showProductDetails(itemSaleProducts.productID)}">
+                                                            <h:graphicImage url="#{itemSaleProducts.productImage.substring(3)}"/>
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                    <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                                        <div class="product_action">
+                                                            <h:form>
+                                                                <h:commandLink class="fa fa-shopping-cart" value="Add to Cart" action="#{cartMB.addCartProduct(itemSaleProducts.productID)}"/>
+                                                            </h:form>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                                        <div class="product_action">
+                                                            <h:form>
+                                                                <h:commandLink disabled="true" title="Please login to Add to Cart" class="fa fa-shopping-cart" value="Add to Cart" action="#{cartMB.addCartProduct(itemSaleProducts.productID)}"/>
+                                                            </h:form>
+                                                        </div>
+                                                    </c:if>
+                                                    <div class="banner_title">
+                                                        <p>Discount <span> <h:outputText value="#{itemSaleProducts.productDiscount}"/> %</span></p>
+                                                    </div>
+                                                </div>
+                                                <div class="product_content">
+                                                    <div class="content_price">
+                                                        <c:if test="#{itemSaleProducts.productDiscount > 0}">
+                                                            <span>
+                                                                <h:outputText value="#{itemSaleProducts.productPrice - (itemSaleProducts.productPrice * (itemSaleProducts.productDiscount / 100))}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                            <span class="old-price">
+                                                                <h:outputText value="#{itemSaleProducts.productPrice}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                        </c:if>
+
+                                                        <c:if test="#{itemSaleProducts.productDiscount == 0}">
+                                                            <span>
+                                                                <h:outputText value="#{itemSaleProducts.productPrice}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                        </c:if>
+                                                    </div>
+                                                    <h3 class="product_title">
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.showProductDetails(itemSaleProducts.productID)}" value="#{itemSaleProducts.productName}"/>
+                                                        </h:form>
+                                                    </h3>
+                                                </div>
+                                                <div class="product_info">
+                                                    <ul>
+                                                        <h:form>
+                                                            <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                                                <li>
+                                                                    <h:commandLink action="#{wishlistMB.addWishlistProduct(itemSaleProducts.productID)}" title="Add to Wishlist" value="Add to Wishlist"/>
+                                                                </li>
+                                                            </c:if>
+                                                            <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                                                <li>
+                                                                    <h:commandLink disabled="true" action="#{wishlistMB.addWishlistProduct(itemSaleProducts.productID)}" title="Please login to Add to Wishlist" value="Add to Wishlist"/>
+                                                                </li>
+                                                            </c:if>
+                                                            <li>
+                                                                <h:commandLink action="#{productsMB.showProductDetails(itemSaleProducts.productID)}" title="Quick view" value="View Detail"/>
+                                                            </li>
+                                                        </h:form>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div> 
+                            </div>       
+                        </div>  
+                        <!--sale product area end--> 
+
+                        <!--popular product area start-->
+                        <div class="new_product_area product_two">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="block_title">
+                                        <h3>Popular Books</h3>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="single_p_active owl-carousel">
+                                    <c:forEach begin="0" end="4" step="1" items="#{productsMB.showPopularProducts()}" var="itemPopularProducts">
+                                        <div class="col-lg-3">
+                                            <div class="single_product">
+                                                <div class="product_thumb">
+                                                    <h:form>
+                                                        <h:commandLink action="#{productsMB.showProductDetails(itemPopularProducts.productID)}">
+                                                            <h:graphicImage url="#{itemPopularProducts.productImage.substring(3)}"/>
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                    <div class="hot_img">
+                                                        <img src="BookStore_User/assets/img/cart/span-hot.png" alt=""/>
+                                                    </div>
+                                                    <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                                        <div class="product_action">
+                                                            <h:form>
+                                                                <h:commandLink class="fa fa-shopping-cart" value="Add to Cart" action="#{cartMB.addCartProduct(itemPopularProducts.productID)}"/>
+                                                            </h:form>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                                        <div class="product_action">
+                                                            <h:form>
+                                                                <h:commandLink disabled="true" title="Please login to Add to Cart" class="fa fa-shopping-cart" value="Add to Cart" action="#{cartMB.addCartProduct(itemPopularProducts.productID)}"/>
+                                                            </h:form>
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+                                                <div class="product_content">
+                                                    <div class="content_price">
+                                                        <c:if test="#{itemPopularProducts.productDiscount > 0}">
+                                                            <span>
+                                                                <h:outputText value="#{itemPopularProducts.productPrice - (itemPopularProducts.productPrice * (itemPopularProducts.productDiscount / 100))}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                            <span class="old-price">
+                                                                <h:outputText value="#{itemPopularProducts.productPrice}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                        </c:if>
+
+                                                        <c:if test="#{itemPopularProducts.productDiscount == 0}">
+                                                            <span>
+                                                                <h:outputText value="#{itemPopularProducts.productPrice}">
+                                                                    <f:convertNumber type="currency"/>
+                                                                </h:outputText>
+                                                            </span>
+                                                        </c:if>
+                                                    </div>
+                                                    <h3 class="product_title">
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.showProductDetails(itemPopularProducts.productID)}" value="#{itemPopularProducts.productName}"/>
+                                                        </h:form>
+                                                    </h3>
+                                                </div>
+                                                <div class="product_info">
+                                                    <ul>
+                                                        <h:form>
+                                                            <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                                                <li>
+                                                                    <h:commandLink action="#{wishlistMB.addWishlistProduct(itemPopularProducts.productID)}" title="Add to Wishlist" value="Add to Wishlist"/>
+                                                                </li>
+                                                            </c:if>
+                                                            <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                                                <li>
+                                                                    <h:commandLink disabled="true" action="#{wishlistMB.addWishlistProduct(itemPopularProducts.productID)}" title="Please login to Add to Wishlist" value="Add to Wishlist"/>
+                                                                </li>
+                                                            </c:if>
+                                                            <li>
+                                                                <h:commandLink action="#{productsMB.showProductDetails(itemPopularProducts.productID)}" title="Quick view" value="View Detail"/>
+                                                            </li>
+                                                        </h:form>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div> 
+                            </div>     
+                        </div>                                          
+                    </div>
+                    <!--pos home section end-->
+                </div>
+                <!--pos page inner end-->
+            </div>
+        </div>
+        <!--pos page end-->
+
+        <!--footer area start-->
+        <div class="footer_area">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer_widget">
+                                <h3>About us</h3>
+                                <p>
+                                    BookStore is a place that provides new and rich books, quickly grasping the market both at home and abroad.<br/>
+                                    Come to BookStore - come to the magic in every word.
+                                </p>
+                                <div class="footer_widget_contect">
+                                    <p><a href="https://www.google.com/maps/place/CUSC+-+Cantho+University+Software+Center/@10.0339056,105.7776849,17z/data=!3m1!4b1!4m5!3m4!1s0x31a0881f9a732075:0xfa43fbeb2b00ca73!8m2!3d10.0339003!4d105.7798736" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>01 Ly Tu Trong, Ninh Kieu District, Can Tho City</a></p>
+                                    <p><a href="tel:+842923835581"><i class="fa fa-mobile" aria-hidden="true"></i>+84 292 383 5581</a></p>
+                                    <p><a href="mailto:cusc@ctu.edu.vn?subject=Contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>cusc@ctu.edu.vn</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer_widget">
+                                <h3>My Account</h3>
+                                <ul>
+                                    <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                        <li><a href="register.xhtml">Register</a></li>
+                                        <li><a href="login.xhtml">Login</a></li>
+                                    </c:if>
+                                    <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                        <li>
+                                            <h:form>
+                                                <h:commandLink action="account" title="#{loginMB.userAccounts.userAccountUsername}" value="#{loginMB.userAccounts.userAccountUsername}"/>
+                                            </h:form>
+                                        </li>
+                                        <li>
+                                            <h:form>
+                                                <h:commandLink action="#{loginMB.logout()}" title="logout" value="Logout"/>
+                                            </h:form>
+                                        </li>
+                                    </c:if>
+                                    <li><a href="faces/BookStore_User/wishlist.xhtml">My wishlist</a></li>
+                                    <li><a href="faces/BookStore_User/cart.xhtml">My Cart</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer_widget">
+                                <h3>Classification</h3>
+                                <ul>
+                                    <li><a href="faces/BookStore_User/products_all.xhtml">By Authors</a></li>
+                                    <li><a href="faces/BookStore_User/products_all.xhtml">By Categories</a></li>
+                                    <li><a href="faces/BookStore_User/products_all.xhtml">By Languages</a></li>
+                                    <li><a href="faces/BookStore_User/products_all.xhtml">By Publishers</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer_widget">
+                                <h3>Quick Access</h3>
+                                <ul>
+                                    <li><a href="/AssignmentEJB-war/">Home</a></li>
+                                    <li><a href="faces/BookStore_User/about_us.xhtml">About Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_bottom">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="copyright_area">
+                                <p>Copyright © 2022 <a href="/AssignmentEJB-war/">BookStore</a> </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--footer area end-->
+
+        <!-- all js here -->
+        <script type="text/javascript" src="BookStore_User/assets/js/vendor/jquery-1.12.0.min.js"></script>
+        <script type="text/javascript" src="BookStore_User/assets/js/popper.js"></script>
+        <script type="text/javascript" src="BookStore_User/assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="BookStore_User/assets/js/ajax-mail.js"></script>
+        <script type="text/javascript" src="BookStore_User/assets/js/plugins.js"></script>
+        <script type="text/javascript" src="BookStore_User/assets/js/main.js"></script>
+    </h:body>
+</html>
+

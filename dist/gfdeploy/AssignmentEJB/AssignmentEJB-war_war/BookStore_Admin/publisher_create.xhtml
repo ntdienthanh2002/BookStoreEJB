@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginAdminMB.checkLoginStatus()}"/>
+        </f:metadata>
+        <ui:include src="layout/css.xhtml"/>
+
+        <!-- modernizr JS
+                    ============================================ -->
+        <script type="text/javascript" src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </h:head>
+    <h:body>
+        <!-- Start Left menu area -->
+        <ui:include src="layout/leftmenu.xhtml"/>
+        <!-- End Left menu area -->
+
+        <!-- Start Welcome area -->
+        <div class="all-content-wrapper">
+            <div class="header-advance-area">
+                <!-- Start Header area -->
+                <ui:include src="layout/header.xhtml"/>
+                <!-- End Header area -->
+
+                <!-- Mobile Menu start -->
+                <ui:include src="layout/mobilemenu.xhtml"/>
+                <!-- Mobile Menu end -->
+            </div>
+
+            <!-- Single pro tab review Start-->
+            <div class="single-pro-review-area mt-t-30 mg-b-15">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="product-payment-inner-st">
+                                <div id="myTabContent" class="tab-content custom-product-edit">
+                                    <div class="product-tab-list tab-pane fade active in" id="description">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="pull-left">
+                                                    <h4>Create New Publisher</h4>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a title="Back to list" href="publishers.xhtml" aria-expanded="false" class="btn btn-primary waves-effect waves-light">
+                                                        <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                                                        Back
+                                                    </a>
+                                                </div>
+                                                <div class="review-content-section">
+                                                    <form id="add-department" action="#" class="add-department" method="post">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="devit-card-custom">
+                                                                    <h:form id="insertForm">
+                                                                        <div class="form-group">
+                                                                            <h:outputText value="Publisher Name"/>
+                                                                            <h:inputText id="namepu" value="#{publishersMB.publishers.publisherName}" class="form-control"/>
+                                                                        </div>
+
+                                                                        <h:commandButton type="submit" value="Create" action="#{publishersMB.insertPublisher()}" class="btn btn-primary waves-effect waves-light" title="Create"/>
+                                                                    </h:form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Footer area -->
+            <ui:include src="layout/footer.xhtml"/>
+            <!-- End Footer area -->
+        </div>
+
+        <ui:include src="layout/js.xhtml"/>
+    </h:body>
+</html>
+

@@ -1,0 +1,256 @@
+<div class="header_area" xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html"
+     xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <!--header top--> 
+    <div class="header_top">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6"></div>
+            <div class="col-lg-6 col-md-6">
+                <div class="header_links">
+                    <ul>
+                        <li><a href="wishlist.xhtml" title="My Wishlist">My Wishlist</a></li>
+                        <li><a href="cart.xhtml" title="My Cart">My Cart</a></li>
+                        <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                            <li>
+                                <h:form>
+                                    <h:commandLink action="account" title="#{loginMB.userAccounts.userAccountUsername}" value="#{loginMB.userAccounts.userAccountUsername}"/>
+                                </h:form>
+                            </li>
+                            <li>
+                                <h:form>
+                                    <h:commandLink action="#{loginMB.logout()}" title="logout" value="Logout"/>
+                                </h:form>
+                            </li>
+                        </c:if>
+                        <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                            <li><a href="login.xhtml" title="Login">Login</a></li>
+                            <li><a href="register.xhtml" title="Register">Register</a></li>
+                        </c:if>
+                    </ul>
+                </div>   
+            </div>
+        </div> 
+    </div> 
+    <!--header top end-->
+
+    <!--header middel--> 
+    <div class="header_middel">
+        <div class="row align-items-center">
+            <!--logo start-->
+            <div class="col-lg-3 col-md-3">
+                <div class="logo">
+                    <a href="/AssignmentEJB-war/"><img src="assets/img/logo/logo.png" alt=""/></a>
+                </div>
+            </div>
+            <!--logo end-->
+            <div class="col-lg-9 col-md-9">
+                <div class="header_right_info">
+                    <div class="search_bar"></div>
+                    <div class="shopping_cart">
+                        <c:if test="#{cartMB.countCart() > 0}">
+                            <a href="#">
+                                <i class="fa fa-shopping-cart"></i> 
+                                <h:outputText value=" #{cartMB.totalProductCart} Items - "/>
+                                <h:outputText value="#{cartMB.totalMoneyCart}">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+
+                            <!--mini cart-->
+                            <div class="mini_cart">
+                                <c:forEach items="#{cartMB.showAllCarts()}" var="itemCarts">
+                                    <div class="cart_item">
+                                        <div class="cart_img">
+                                            <h:graphicImage url="#{itemCarts.image}"/>
+                                        </div>
+                                        <div class="cart_info">
+                                            <a href="#"><h:outputText value="#{itemCarts.proName}"/></a>
+                                            <span class="cart_price">
+                                                <h:outputText value="#{itemCarts.unitPrice}">
+                                                    <f:convertNumber type="currency"/>
+                                                </h:outputText>
+                                            </span>
+                                            <span class="quantity">
+                                                <h:outputText value="Quantity: #{itemCarts.quantity}"/>
+                                            </span>
+                                        </div>
+                                        <div class="cart_remove">
+                                            <h:form>
+                                                <h:commandLink title="Delete" class="fa fa-times-circle" action="#{cartMB.removeCart(itemCarts.proID)}"/>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                                <div class="total_price">
+                                    <span> Total </span>
+                                    <span class="prices">
+                                        <h:outputText value="#{cartMB.totalMoneyCart}">
+                                            <f:convertNumber type="currency"/>
+                                        </h:outputText>
+                                    </span>
+                                </div>
+                                <div class="cart_button">
+                                    <a href="checkout.xhtml"> Check out</a>
+                                </div>
+                            </div>
+                            <!--mini cart end-->
+                        </c:if>
+                        <c:if test="#{cartMB.countCart() == 0}">
+                            <a href="#"><i class="fa fa-shopping-cart"></i> 0 Items - $0 </a>
+                        </c:if>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>     
+    <!--header middel end-->  
+
+    <div class="header_bottom">
+        <div class="row">
+            <div class="col-12">
+                <div class="main_menu_inner">
+                    <div class="main_menu d-none d-lg-block">
+                        <nav>
+                            <ul>
+                                <li><a href="/AssignmentEJB-war/">Home</a></li>
+                                <li><a href="products_all.xhtml">Authors</a>
+                                    <div class="mega_menu jewelry">
+                                        <div class="mega_items jewelry">
+                                            <ul>
+                                                <c:forEach items="#{authorsMB.showAllAuthors()}" var="itemAuthors">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.chooseAuthor(itemAuthors.authorID)}" value="#{itemAuthors.authorName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="products_all.xhtml">Categories</a>
+                                    <div class="mega_menu jewelry">
+                                        <div class="mega_items jewelry">
+                                            <ul>
+                                                <c:forEach items="#{categoriesMB.showAllCategories()}" var="itemCategories">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.chooseCategory(itemCategories.categoryID)}" value="#{itemCategories.categoryName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="products_all.xhtml">Languages</a>
+                                    <div class="mega_menu jewelry">
+                                        <div class="mega_items jewelry">
+                                            <ul>
+                                                <c:forEach items="#{languagesMB.showAllLanguages()}" var="itemLanguages">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.chooseLanguage(itemLanguages.languageID)}" value="#{itemLanguages.languageName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="products_all.xhtml">Publishers</a>
+                                    <div class="mega_menu jewelry">
+                                        <div class="mega_items jewelry">
+                                            <ul>
+                                                <c:forEach items="#{publishersMB.showAllPublishers()}" var="itemPublishers">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.choosePublisher(itemPublishers.publisherID)}" value="#{itemPublishers.publisherName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="about_us.xhtml">About Us</a></li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="mobile-menu d-lg-none">
+                        <nav>
+                            <ul>
+                                <li><a href="/AssignmentEJB-war/">Home</a></li>
+                                <li><a href="products_all.xhtml">Authors</a>
+                                    <div>
+                                        <div>
+                                            <ul>
+                                                <c:forEach items="#{authorsMB.showAllAuthors()}" var="itemAuthors">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.chooseAuthor(itemAuthors.authorID)}" value="#{itemAuthors.authorName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="products_all.xhtml">Categories</a>
+                                    <div>
+                                        <div>
+                                            <ul>
+                                                <c:forEach items="#{categoriesMB.showAllCategories()}" var="itemCategories">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.chooseCategory(itemCategories.categoryID)}" value="#{itemCategories.categoryName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="products_all.xhtml">Languages</a>
+                                    <div>
+                                        <div>
+                                            <ul>
+                                                <c:forEach items="#{languagesMB.showAllLanguages()}" var="itemLanguages">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.chooseLanguage(itemLanguages.languageID)}" value="#{itemLanguages.languageName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="products_all.xhtml">Publishers</a>
+                                    <div>
+                                        <div>
+                                            <ul>
+                                                <c:forEach items="#{publishersMB.showAllPublishers()}" var="itemPublishers">
+                                                    <li>
+                                                        <h:form>
+                                                            <h:commandLink action="#{productsMB.choosePublisher(itemPublishers.publisherID)}" value="#{itemPublishers.publisherName}"/>
+                                                        </h:form>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div>  
+                                </li>
+                                <li><a href="about_us.xhtml">About Us</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="assets/layout/css.xhtml"/>
+
+        <script type="text/javascript" src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    </h:head>
+    <h:body>
+        <!-- Add your site or application content here -->
+
+        <!--pos page start-->
+        <div class="pos_page">
+            <div class="container">
+                <!--pos page inner-->
+                <div class="pos_page_inner">  
+                    <!--header area -->
+                    <ui:include src="assets/layout/header.xhtml"/>
+                    <!--header end -->
+
+                    <!--breadcrumbs area start-->
+                    <div class="breadcrumbs_area">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="breadcrumb_content">
+                                    <ul>
+                                        <li><a href="/AssignmentEJB-war/">home</a></li>
+                                        <li><i class="fa fa-angle-right"></i></li>
+                                        <li>Product Details</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--breadcrumbs area end-->
+
+                    <!--product wrapper start-->
+                    <div class="product_details">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-6">
+                                <div class="product_tab fix"><div class="tab-content produc_tab_c">
+                                        <div class="tab-pane fade show active" id="p_tab1" role="tabpanel">
+                                            <div class="modal_img">
+                                                <h:graphicImage url="#{productsMB.products.productImage}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-lg-7 col-md-6">
+                                <div class="product_d_right">
+                                    <h1><h:outputText value="#{productsMB.products.productName}"/></h1>
+                                    <div class="product_desc">
+                                        <p>
+                                            <h:outputText value="#{productsMB.products.productDescription}"/>
+                                        </p>
+                                    </div>
+
+                                    <div class="content_price mb-15">
+                                        <c:if test="#{productsMB.products.productDiscount > 0}">
+                                            <span>
+                                                <h:outputText value="#{productsMB.products.productPrice - (productsMB.products.productPrice * (productsMB.products.productDiscount / 100))}">
+                                                    <f:convertNumber type="currency"/>
+                                                </h:outputText>
+                                            </span>
+                                            <span class="old-price">
+                                                <h:outputText value="#{productsMB.products.productPrice}">
+                                                    <f:convertNumber type="currency"/>
+                                                </h:outputText>
+                                            </span>
+                                        </c:if>
+
+                                        <c:if test="#{productsMB.products.productDiscount == 0}">
+                                            <span>
+                                                <h:outputText value="#{productsMB.products.productPrice}">
+                                                    <f:convertNumber type="currency"/>
+                                                </h:outputText>
+                                            </span>
+                                        </c:if>
+                                    </div>
+                                    <div class="product_stock mb-20">
+                                        <p><h:outputText value="#{productsMB.products.productQuantity}"/> items</p>
+                                        <span> In stock </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--product details end-->
+
+                    <!--product info start-->
+                    <div class="product_d_info">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="product_d_inner">   
+                                    <div class="product_info_button">    
+                                        <ul class="nav" role="tablist">
+                                            <li>
+                                                <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Product Description</a>
+                                            </li>
+                                            <li>
+                                                <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Detail information</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                                            <div class="product_info_content">
+                                                <p>
+                                                    <h:outputText value="#{productsMB.products.productDescription}"/>
+                                                </p>
+                                            </div>    
+                                        </div>
+
+                                        <div class="tab-pane fade" id="sheet" role="tabpanel">
+                                            <div class="product_d_table">
+                                                <form action="#">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="first_child">Author</td>
+                                                                <td><h:outputText value="#{productsMB.products.authorID.authorName}"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="first_child">Publisher</td>
+                                                                <td><h:outputText value="#{productsMB.products.publisherID.publisherName}"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="first_child">Category</td>
+                                                                <td><h:outputText value="#{productsMB.products.categoryID.categoryName}"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="first_child">Language</td>
+                                                                <td><h:outputText value="#{productsMB.products.languageID.languageName}"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="first_child">Form</td>
+                                                                <td><h:outputText value="#{productsMB.products.productForm}"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="first_child">Size</td>
+                                                                <td><h:outputText value="#{productsMB.products.productSize} cm"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="first_child">Page Number</td>
+                                                                <td><h:outputText value="#{productsMB.products.productPage}"/></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>  
+                    <!--product info end--> 
+                </div>
+                <!--pos page inner end-->
+            </div>
+        </div>
+        <!--pos page end-->
+
+        <!--footer area start-->
+        <ui:include src="assets/layout/footer.xhtml"/>
+        <!--footer area end-->
+
+        <!-- all js here -->
+        <ui:include src="assets/layout/js.xhtml"/>
+    </h:body>
+</html>
+

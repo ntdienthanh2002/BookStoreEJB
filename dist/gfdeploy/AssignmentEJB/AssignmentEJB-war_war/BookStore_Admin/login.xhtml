@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:include src="layout/css.xhtml"/>
+
+        <!-- modernizr JS
+                    ============================================ -->
+        <script type="text/javascript" src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </h:head>
+    <h:body>
+        <div class="error-pagewrap">
+            <div class="error-page-int">
+                <div class="text-center m-b-md custom-login">
+                    <h3>PLEASE LOGIN TO APP</h3>
+                </div>
+                <div class="content-error">
+                    <div class="hpanel">
+                        <div class="panel-body">
+                            <h5><i style="color: red">#{loginAdminMB.message}</i></h5>
+                            <h:form>
+                                <form action="#">
+                                    <div class="form-group">
+                                        <label class="control-label" for="username">Username</label>
+                                        <h:inputText class="form-control" id="username" value="#{loginAdminMB.uname}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="password">Password</label>
+                                        <h:inputSecret class="form-control" id="password" value="#{loginAdminMB.pword}"/>
+                                    </div>
+                                    <h:form>
+                                        <h:commandButton class="btn btn-success btn-block loginbtn" type="submit" value="Login" action="#{loginAdminMB.checkLogin()}"/>
+                                    </h:form>
+                                </form>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center login-footer">
+                    <p>Copyright © 2022 <a href="authors.xhtml">BookStore</a></p>
+                </div>
+            </div>   
+        </div>
+
+        <ui:include src="layout/js.xhtml"/>
+    </h:body>
+</html>
+

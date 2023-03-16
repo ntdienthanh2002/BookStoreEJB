@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:include src="assets/layout/css.xhtml"/>
+
+        <script type="text/javascript" src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    </h:head>
+    <h:body>
+        <!-- Add your site or application content here -->
+
+        <!--pos page start-->
+        <div class="pos_page">
+            <div class="container"> 
+                <!--pos page inner-->
+                <div class="pos_page_inner">  
+                    <!--header area -->
+                    <ui:include src="assets/layout/header.xhtml"/>
+                    <!--header end -->
+
+                    <!--breadcrumbs area start-->
+                    <div class="breadcrumbs_area">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="breadcrumb_content">
+                                    <ul>
+                                        <li><a href="/AssignmentEJB-war/">Home</a></li>
+                                        <li><i class="fa fa-angle-right"></i></li>
+                                        <li>Login</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--breadcrumbs area end-->
+
+                    <!-- customer login start -->
+                    <div class="customer_login">
+                        <div class="row">
+                            <!--login area start-->
+                            <div class="col-lg-4 col-md-4"></div>
+                            <div class="col-lg-4 col-md-4">
+                                <div class="account_form">
+                                    <h2 class="text-center">login</h2>
+                                    <h5><i style="color: red">#{loginMB.message}</i></h5>
+                                    <h:form>
+                                        <form action="#">
+                                            <p>   
+                                                <label>Username <span>*</span></label>
+                                                <h:inputText id="username" value="#{loginMB.uname}"/>
+                                            </p>
+                                            <p>   
+                                                <label>Password <span>*</span></label>
+                                                <h:inputSecret id="password" value="#{loginMB.pword}"/>
+                                            </p>   
+                                            <div class="login_submit">
+                                                <h:form>
+                                                    <h:commandButton type="submit" value="Login" action="#{loginMB.checkLogin()}"/>
+                                                </h:form>
+                                            </div>
+                                        </form>
+                                    </h:form>
+                                </div>    
+                            </div>
+                            <div class="col-lg-4 col-md-4"></div>
+                            <!--login area start-->
+                        </div>
+                    </div>
+                    <!-- customer login end -->
+
+                </div>
+                <!--pos page inner end-->
+            </div> 
+        </div>
+        <!--pos page end-->
+
+        <!--footer area start-->
+        <ui:include src="assets/layout/footer.xhtml"/>
+        <!--footer area end-->
+
+        <!-- all js here -->
+        <ui:include src="assets/layout/js.xhtml"/>
+    </h:body>
+</html>
+

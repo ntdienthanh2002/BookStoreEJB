@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginAdminMB.checkLoginStatus()}"/>
+        </f:metadata>
+        <ui:include src="layout/css.xhtml"/>
+
+        <!-- modernizr JS
+                    ============================================ -->
+        <script type="text/javascript" src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </h:head>
+    <h:body>
+        <!-- Start Left menu area -->
+        <ui:include src="layout/leftmenu.xhtml"/>
+        <!-- End Left menu area -->
+
+        <!-- Start Welcome area -->
+        <div class="all-content-wrapper">
+            <div class="header-advance-area">
+                <!-- Start Header area -->
+                <ui:include src="layout/header.xhtml"/>
+                <!-- End Header area -->
+
+                <!-- Mobile Menu start -->
+                <ui:include src="layout/mobilemenu.xhtml"/>
+                <!-- Mobile Menu end -->
+            </div>
+            
+            <!-- Data Table Start -->
+            <div class="data-table-area mg-b-15">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="sparkline13-list">
+                                <div class="sparkline13-hd">
+                                    <div class="main-sparkline13-hd">
+                                        <h1>Manage Orders</h1>
+                                    </div>
+                                </div>
+                                <div class="sparkline13-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
+                                               data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="action">Delete</th>
+                                                    <th data-field="id">Order ID</th>
+                                                    <th data-field="useraccount">User Account</th>
+                                                    <th data-field="date">Order Date</th>
+                                                    <th data-field="delivery">Delivery Date</th>
+                                                    <th data-field="address">Address</th>
+                                                    <th data-field="phone">Phone</th>
+                                                    <th data-field="note">Note</th>
+                                                    <th data-field="status">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="#{ordersMB.showAllOrders()}" var="itemOrders">
+                                                    <tr>
+                                                        <td>
+                                                            <h:form id="action">
+                                                                <h:commandLink title="Delete" class="btn btn-custon-rounded-four btn-danger fa fa-trash" type="submit" action="#{ordersMB.deleteOrder(itemOrders.orderID)}" rendered="#{ordersMB.hideButtonDelete(itemOrders.orderID)}"/>
+                                                            </h:form>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{itemOrders.orderID}"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{itemOrders.userAccountID.userAccountUsername}"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{itemOrders.orderDate}">
+                                                                <f:convertDateTime locale="US" timeZone="GMT+7"/>
+                                                            </h:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{itemOrders.orderDeliveryDate}">
+                                                                <f:convertDateTime locale="US" timeZone="GMT+7"/>
+                                                            </h:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{itemOrders.orderAddress}"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{itemOrders.orderPhone}"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{itemOrders.orderNote}"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:form>
+                                                                <h:commandButton id="status" disabled="#{ordersMB.disableButtonStatus(itemOrders.orderID)}" class="ps-setting #{ordersMB.buttonStatus(itemOrders.orderID)}" value="#{ordersMB.formatStatus(itemOrders.orderID)}">
+                                                                    <f:ajax event="click" render="status" listener="#{ordersMB.updateOrderStatus(itemOrders.orderID)}"/>
+                                                                </h:commandButton>
+                                                            </h:form>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Table End -->
+
+            <!-- Start Footer area -->
+            <ui:include src="layout/footer.xhtml"/>
+            <!-- End Footer area -->
+        </div>
+
+        <ui:include src="layout/js.xhtml"/>
+    </h:body>
+</html>
+

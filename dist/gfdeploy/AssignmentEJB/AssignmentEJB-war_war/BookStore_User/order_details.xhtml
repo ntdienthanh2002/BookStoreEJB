@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginMB.checkLoginStatus()}"/>
+        </f:metadata>
+        <ui:include src="assets/layout/css.xhtml"/>
+
+        <script type="text/javascript" src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    </h:head>
+    <h:body>
+        <!-- Add your site or application content here -->
+
+        <!--pos page start-->
+        <div class="pos_page">
+            <div class="container">
+                <!--pos page inner-->
+                <div class="pos_page_inner">  
+                    <!--header area -->
+                    <ui:include src="assets/layout/header.xhtml"/>
+                    <!--header end -->
+
+                    <!--breadcrumbs area start-->
+                    <div class="breadcrumbs_area">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="breadcrumb_content">
+                                    <ul>
+                                        <li><a href="/AssignmentEJB-war/">Home</a></li>
+                                        <li><i class="fa fa-angle-right"></i></li>
+                                        <li>Account</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--breadcrumbs area end-->
+
+                    <!-- Start Maincontent  -->
+                    <section class="main_content_area">
+                        <div class="account_dashboard">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <!-- Nav tabs -->
+                                    <div class="dashboard_tab_button">
+                                        <ul role="tablist" class="nav flex-column dashboard-list">
+                                            <li> <a href="#orders" data-toggle="tab" class="nav-link active">Orders</a></li>
+                                        </ul>
+                                    </div>    
+                                </div>
+                                <div class="col-sm-12 col-md-9 col-lg-9">
+                                    <!-- Tab panes -->
+                                    <div class="tab-content dashboard_content">
+                                        <div class="tab-pane fade show active" id="orders">
+                                            <h3>Your Order Details</h3>
+                                            <div class="coron_table table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product Name</th>
+                                                            <th>Unit Price</th>
+                                                            <th>Quantity</th>
+                                                            <th>Discount</th>
+                                                            <th>Total Price</th>	 	 	 	
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="#{ordersMB.showOrderDetailsByOrder()}" var="itemOrderDetailsByOrder">
+                                                            <tr>
+                                                                <td>
+                                                                    <h:outputText value="#{itemOrderDetailsByOrder.products.productName}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputText value="#{itemOrderDetailsByOrder.orderDetailPrice}">
+                                                                        <f:convertNumber type="currency"/>
+                                                                    </h:outputText>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputText value="#{itemOrderDetailsByOrder.orderDetailQuantity}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputText value="#{itemOrderDetailsByOrder.orderDetailDiscount} %"/>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputText value="#{(itemOrderDetailsByOrder.orderDetailPrice * itemOrderDetailsByOrder.orderDetailQuantity) - (itemOrderDetailsByOrder.orderDetailPrice * itemOrderDetailsByOrder.orderDetailQuantity * (itemOrderDetailsByOrder.orderDetailDiscount / 100))}">
+                                                                        <f:convertNumber type="currency"/>
+                                                                    </h:outputText>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+
+                                                <div class="payment_method">
+                                                    <div class="order_button">
+                                                        <h:form>
+                                                            <h:commandButton type="submit" action="account" value="Back"/>
+                                                        </h:form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>      	
+                    </section>			
+                    <!-- End Maincontent  --> 
+                </div>
+                <!--pos page inner end-->
+            </div>
+        </div>
+        <!--pos page end-->
+
+        <!--footer area start-->
+        <ui:include src="assets/layout/footer.xhtml"/>
+        <!--footer area end-->
+
+        <!-- all js here -->
+        <ui:include src="assets/layout/js.xhtml"/>
+    </h:body>
+</html>
+

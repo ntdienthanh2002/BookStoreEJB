@@ -1,0 +1,81 @@
+<div class="footer_area" xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <div class="footer_top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer_widget">
+                        <h3>About us</h3>
+                        <p>
+                            BookStore is a place that provides new and rich books, quickly grasping the market both at home and abroad.<br/>
+                            Come to BookStore - come to the magic in every word.
+                        </p>
+                        <div class="footer_widget_contect">
+                            <p><a href="https://www.google.com/maps/place/CUSC+-+Cantho+University+Software+Center/@10.0339056,105.7776849,17z/data=!3m1!4b1!4m5!3m4!1s0x31a0881f9a732075:0xfa43fbeb2b00ca73!8m2!3d10.0339003!4d105.7798736" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>01 Ly Tu Trong, Ninh Kieu District, Can Tho City</a></p>
+                            <p><a href="tel:+842923835581"><i class="fa fa-mobile" aria-hidden="true"></i>+84 292 383 5581</a></p>
+                            <p><a href="mailto:cusc@ctu.edu.vn?subject=Contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>cusc@ctu.edu.vn</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer_widget">
+                        <h3>My Account</h3>
+                        <ul>
+                            <c:if test="#{loginMB.userAccounts.userAccountID == null}">
+                                <li><a href="register.xhtml">Register</a></li>
+                                <li><a href="login.xhtml">Login</a></li>
+                            </c:if>
+                            <c:if test="#{loginMB.userAccounts.userAccountID != null}">
+                                <li>
+                                    <h:form>
+                                        <h:commandLink action="account" title="#{loginMB.userAccounts.userAccountUsername}" value="#{loginMB.userAccounts.userAccountUsername}"/>
+                                    </h:form>
+                                </li>
+                                <li>
+                                    <h:form>
+                                        <h:commandLink action="#{loginMB.logout()}" title="logout" value="Logout"/>
+                                    </h:form>
+                                </li>
+                            </c:if>
+                            <li><a href="wishlist.xhtml">My wishlist</a></li>
+                            <li><a href="cart.xhtml">My Cart</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer_widget">
+                        <h3>Classification</h3>
+                        <ul>
+                            <li><a href="products_all.xhtml">By Authors</a></li>
+                            <li><a href="products_all.xhtml">By Categories</a></li>
+                            <li><a href="products_all.xhtml">By Languages</a></li>
+                            <li><a href="products_all.xhtml">By Publishers</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer_widget">
+                        <h3>Quick Access</h3>
+                        <ul>
+                            <li><a href="/AssignmentEJB-war/">Home</a></li>
+                            <li><a href="about_us.xhtml">About Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer_bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6">
+                    <div class="copyright_area">
+                        <p>Copyright © 2022 <a href="/AssignmentEJB-war/">BookStore</a> </p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6"></div>
+            </div>
+        </div>
+    </div>
+</div>
