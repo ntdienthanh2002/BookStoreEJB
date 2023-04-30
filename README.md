@@ -1,1 +1,1 @@
-# assEJB
+# BookStoreEJB
